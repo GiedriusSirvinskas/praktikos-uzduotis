@@ -1,0 +1,50 @@
+.container {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 20px;
+}
+
+.card {
+  border: 1px solid black;
+  border-radius: 15px;
+  padding: 20px;
+}
+
+.amount {
+  width: 20%;
+}
+
+.amount input {
+  width: 100%;
+}
+
+.food {
+  display: flex;
+  justify-content: space-evenly;
+  font-size: 1.5rem;
+}
+
+.info {
+  display: flex;
+  justify-content: space-evenly;
+  padding-bottom: 10px;
+  color: #cecece;
+}
+
+.button {
+  cursor: pointer;
+}
+
+.menu {
+  cursor: pointer;
+}
+
+.active {
+  background-color: grey;
+  font-weight: bold;
+}
+
+.table {
+  padding: 20px;
+}

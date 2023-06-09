@@ -1,0 +1,41 @@
+.card {
+  border: 1px solid black;
+  border-radius: 15px;
+  display: flex;
+  width: 30%;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  height: 80%;
+}
+
+.container {
+  width: 95%;
+  height: 90%;
+  padding: 20px;
+  display: flex;
+  align-items: flex-start;
+  justify-content: flex-start;
+}
+
+.columns {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+}
+.spans {
+  display: flex;
+  justify-content: space-between;
+}
+
+.green {
+  color: green;
+}
+
+.red {
+  color: red;
+}
+
+.blue {
+  color: lightskyblue;
+}
