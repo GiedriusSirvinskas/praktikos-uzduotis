@@ -3,13 +3,17 @@ import Box from '@mui/material/Box';
 import Card from '@mui/material/Card';
 import CardActions from '@mui/material/CardActions';
 import CardContent from '@mui/material/CardContent';
-import Button from '@mui/material/Button';
 import Typography from '@mui/material/Typography';
 import CardStyles from './Orders.module.css';
-import { Height } from '@mui/icons-material';
 import AlertDialogSlide from './Confirmation';
+import ClearIcon from '@mui/icons-material/Clear';
 
-export default function OutlinedCard({ order, handleApprove, handleDecline }) {
+export default function OutlinedCard({
+  order,
+  handleApprove,
+  handleDecline,
+  handleDelete,
+}) {
   const foodNames = order.foods.map((food) => {
     return food.foodName;
   });
@@ -24,7 +28,7 @@ export default function OutlinedCard({ order, handleApprove, handleDecline }) {
 
   const card = (
     <React.Fragment>
-      <CardContent>
+      <CardContent sx={{ height: '200px' }}>
         <Typography sx={{ fontSize: 14 }} color='text.secondary' gutterBottom>
           <span className={CardStyles.spans}>
             <span>User: {order.customerName}</span>
@@ -51,20 +55,20 @@ export default function OutlinedCard({ order, handleApprove, handleDecline }) {
         <div className={CardStyles.columns}>
           <div>
             <div>Food</div>
-            {foodNames.map((food) => {
-              return <div key={food}>{food}</div>;
+            {foodNames.map((food, index) => {
+              return <div key={index}>{food}</div>;
             })}
           </div>
           <div>
             <div>Amount</div>
-            {foodAmounts.map((food) => {
-              return <div key={food}>{food}</div>;
+            {foodAmounts.map((food, index) => {
+              return <div key={index}>{food}</div>;
             })}
           </div>
           <div>
             <div>Price</div>
-            {foodPrices.map((food) => {
-              return <div key={food}>{food}</div>;
+            {foodPrices.map((food, index) => {
+              return <div key={index}>{food}</div>;
             })}
           </div>
         </div>
@@ -84,12 +88,23 @@ export default function OutlinedCard({ order, handleApprove, handleDecline }) {
         >
           Decline
         </AlertDialogSlide>
+        <AlertDialogSlide
+          title='Delete Order'
+          description='Are you sure you want to delete this order?'
+          onConfirm={() => handleDelete(order._id)}
+        >
+          <ClearIcon />
+        </AlertDialogSlide>
       </CardActions>
     </React.Fragment>
   );
   return (
-    <Box sx={{ minWidth: 275 }}>
-      <Card variant='outlined'>{card}</Card>
+    <Box
+      sx={{
+        minWidth: '275px',
+      }}
+    >
+      <Card variant='outlined' className={CardStyles.shadow}>{card}</Card>
     </Box>
   );
 }

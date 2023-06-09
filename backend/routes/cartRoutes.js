@@ -12,4 +12,8 @@ cartRouter
 .route('/:id')
 .delete(auth, cartController.removeFromCart)
 
+cartRouter
+.route('/')
+.delete(auth, cartController.clearCart)
+
 module.exports = cartRouter

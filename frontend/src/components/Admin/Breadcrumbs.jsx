@@ -8,17 +8,17 @@ import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
 export default function IconBreadcrumbs() {
   return (
     <div>
-      <Breadcrumbs aria-label='breadcrumb'>
+      <Breadcrumbs aria-label='breadcrumb' sx={{fontSize: '2rem'}}>
         <Link to='menus'>
-          <MenuBookIcon />
+          <MenuBookIcon fontSize='2rem'/>
           Menus
         </Link>
         <Link to='foods'>
-          <RamenDiningIcon />
+          <RamenDiningIcon fontSize='2rem'/>
           Foods
         </Link>
         <Link to='orders'>
-          <BookmarkBorderIcon />
+          <BookmarkBorderIcon fontSize='2rem'/>
           Orders
         </Link>
       </Breadcrumbs>

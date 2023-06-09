@@ -8,7 +8,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import { useState, useEffect } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
-import { setDriver } from 'mongoose';
+import PositionedSnackbar from '../../Cart/Snackbar';
 
 function EditFood() {
   const navigate = useNavigate();
@@ -122,10 +122,17 @@ function EditFood() {
           Submit
         </Button>
       </form>
-      <div className={AdminStyles.messageContainer}>
-        {submitMessage && <div>{submitMessage}</div>}
-        {error && <div>{error}</div>}
-      </div>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }

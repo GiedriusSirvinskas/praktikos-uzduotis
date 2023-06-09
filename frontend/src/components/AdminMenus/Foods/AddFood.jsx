@@ -8,6 +8,7 @@ import AdminStyles from './AdminFoods.module.css';
 import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useNavigate } from 'react-router-dom';
+import PositionedSnackbar from '../../Cart/Snackbar';
 
 function AdminFoods() {
   const [menus, setMenus] = useState([]);
@@ -54,7 +55,7 @@ function AdminFoods() {
 
   const handleDescriptionChange = (event) => {
     setDescription(event.target.value);
-  }
+  };
 
   const handleSubmit = async () => {
     try {
@@ -79,7 +80,7 @@ function AdminFoods() {
 
   return (
     <div className={AdminStyles.addFood}>
-      <div>Add a food</div>
+      <div className={AdminStyles.title}>Add a food</div>
       <form>
         <TextField
           id='outlined-basic'
@@ -121,10 +122,17 @@ function AdminFoods() {
           Submit
         </Button>
       </form>
-      <div className={AdminStyles.messageContainer}>
-        {submitMessage && <div>{submitMessage}</div>}
-        {error && <div>{error}</div>}
-      </div>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }

@@ -18,15 +18,27 @@ exports.newOrder = async (req, res) => {
   }
 };
 
-exports.getOrders = (req, res) => {
+exports.getOrders = async (req, res) => {
   try {
-    Order.find().then((doc) => {
-      res.status(200).json(doc);
+    const page = parseInt(req.query.page) || 1;
+    const limit = parseInt(req.query.limit) || 8;
+
+    const count = await Order.countDocuments();
+    const totalPages = Math.ceil(count / limit);
+
+    const orders = await Order.find()
+      .skip((page - 1) * limit)
+      .limit(limit);
+
+    res.status(200).json({
+      orders,
+      totalPages,
     });
-  } catch {
-    res.status(404).json({ error: 'Request failed' });
+  } catch (error) {
+    res.status(500).json({ error: 'An error occurred while retrieving orders' });
   }
 };
+
 
 exports.approveOrder = async (req, res) => {
   try {
@@ -48,7 +60,9 @@ exports.approveOrder = async (req, res) => {
 
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while approving the order' });
+    res
+      .status(500)
+      .json({ error: 'An error occurred while approving the order' });
   }
 };
 
@@ -72,7 +86,24 @@ exports.declineOrder = async (req, res) => {
 
     res.json(order);
   } catch (error) {
-    res.status(500).json({ error: 'An error occurred while declining the order' });
+    res
+      .status(500)
+      .json({ error: 'An error occurred while declining the order' });
   }
 };
 
+exports.deleteOrder = async (req, res) => {
+  try {
+    const { id } = req.params;
+
+    Order.findByIdAndDelete(id)
+      .then((doc) => {
+        [res.status(200).json({ message: 'Order deleted successfully' })];
+      })
+      .catch((error) => {
+        res.status(404).json({ error: 'Failed to delete order' });
+      });
+  } catch (error) {
+    res.status(404).json({ error: 'Failed to delete order' });
+  }
+};

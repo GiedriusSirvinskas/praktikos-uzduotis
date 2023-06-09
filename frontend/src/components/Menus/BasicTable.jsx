@@ -21,11 +21,11 @@ export default function BasicTable({
   const isMobile = useMediaQuery(theme.breakpoints.down('sm'));
 
   return (
-    <TableContainer component={Paper}>
+    <TableContainer component={Paper} sx={{height: '90%'}}>
       <Table
         sx={{
           minWidth: 650,
-          ...(isMobile && { overflowX: 'auto' }), // Enable horizontal scrolling on mobile
+          ...(isMobile && { overflowX: 'auto', overflowY: 'auto', maxHeight: '300px' }), // Enable horizontal scrolling on mobile
         }}
         aria-label='simple table'
       >

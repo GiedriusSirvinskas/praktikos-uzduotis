@@ -3,12 +3,13 @@ import axios from 'axios';
 import { useNavigate, useParams } from 'react-router-dom';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
+import PositionedSnackbar from '../../Cart/Snackbar';
 
 function DeleteMenu() {
   const { id } = useParams();
   const navigate = useNavigate();
 
-  const deleteMenuURL = "http://localhost:3000/menus/"
+  const deleteMenuURL = 'http://localhost:3000/menus/';
 
   const [error, setError] = useState(undefined);
   const [submitMessage, setSubmitMessage] = useState(undefined);
@@ -23,7 +24,7 @@ function DeleteMenu() {
       setSubmitMessage('Successfully deleted a menu');
       setTimeout(() => {
         setSubmitMessage('');
-        navigate('/admin/menus')
+        navigate('/admin/menus');
       }, 2000);
     } catch (error) {
       setError(error.response.data.error);
@@ -42,10 +43,17 @@ function DeleteMenu() {
       <Button variant='outlined' onClick={handleNavigate}>
         Go back
       </Button>
-      <div className={AdminStyles.messageContainer}>
-        {submitMessage && <div>{submitMessage}</div>}
-        {error && <div>{error}</div>}
-      </div>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }

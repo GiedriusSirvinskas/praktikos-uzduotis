@@ -4,12 +4,13 @@ import { useEffect, useState } from 'react';
 import { totalPrice } from '../../utils/totalPrice';
 import SpanningTable from './SpanningTable';
 import Button from '@mui/material/Button';
+import PositionedSnackbar from './Snackbar';
 
 function Cart() {
   const [cart, setCart] = useState([]);
   const cartURL = 'http://localhost:3000/cart/';
-  const [error, setError] = useState(undefined);
-  const [submitMessage, setSubmitMessage] = useState(undefined);
+  const [error, setError] = useState('');
+  const [submitMessage, setSubmitMessage] = useState('');
   const [currentUser, setCurrentUser] = useState({});
 
   const orderURL = 'http://localhost:3000/orders';
@@ -41,18 +42,30 @@ function Cart() {
 
   const handleOrder = () => {
     try {
+      if (cart.length < 1) {
+        setError('Cart is empty!');
+        return;
+      }
+
       const foods = cart.map((item) => ({
         foodName: item.foodName,
         foodAmount: item.amount,
         foodPrice: item.foodPrice,
       }));
 
-      axios.post(orderURL, {
-        customerName: currentUser.name,
-        customerEmail: currentUser.email,
-        totalPrice: totalPrice(cart),
-        foods: foods,
-      });
+      axios
+        .post(orderURL, {
+          customerName: currentUser.name,
+          customerEmail: currentUser.email,
+          totalPrice: totalPrice(cart),
+          foods: foods,
+        })
+        .then(() => {
+          setSubmitMessage('Order placed succesfully!');
+          axios
+            .delete(cartURL)
+            .catch((error) => setError(error.response.data.error));
+        });
     } catch (error) {
       setError(error.response.data);
       setTimeout(() => {
@@ -62,9 +75,22 @@ function Cart() {
   };
 
   return (
-    <div>
+    <div className={CartStyles.container}>
       <SpanningTable cart={cart} handleDelete={handleDelete} />
-      <Button variant='outlined' onClick={handleOrder}>Order</Button>
+      <Button variant='outlined' onClick={handleOrder}>
+        Order
+      </Button>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }

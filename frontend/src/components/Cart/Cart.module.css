@@ -1,16 +1,10 @@
-.card {
-  border: 1px solid black;
-  padding: 20px;
-  border-radius: 15px;
-  width: 30%;
-}
-
 .container {
   display: flex;
   justify-content: flex-start;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   height: 90%;
+  gap: 30px;
 }
 
 .remove {
@@ -19,5 +13,9 @@
 }
 
 .button {
+  cursor: pointer;
+}
+
+.remove {
   cursor: pointer;
 }

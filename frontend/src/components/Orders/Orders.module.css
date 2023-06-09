@@ -7,6 +7,8 @@
   justify-content: center;
   align-items: center;
   height: 80%;
+  flex-wrap: wrap;
+
 }
 
 .container {
@@ -15,14 +17,19 @@
   padding: 20px;
   display: flex;
   align-items: flex-start;
-  justify-content: flex-start;
+  justify-content: center;
+  flex-wrap: wrap;
+  gap: 10px;
 }
 
 .columns {
   display: flex;
   justify-content: space-between;
   align-items: center;
+  overflow-y: scroll;
+  height: 112px;
 }
+
 .spans {
   display: flex;
   justify-content: space-between;
@@ -38,4 +45,56 @@
 
 .blue {
   color: lightskyblue;
+}
+
+/* Track */
+::-webkit-scrollbar {
+  width: 6px; /* width of the scrollbar */
+}
+
+/* Handle */
+::-webkit-scrollbar-thumb {
+  background: #888; /* color of the scrollbar handle */
+  border-radius: 3px; /* round the edges of the handle */
+}
+
+/* Handle on hover */
+::-webkit-scrollbar-thumb:hover {
+  background: #555; /* color of the scrollbar handle on hover */
+}
+
+/* Track on hover */
+::-webkit-scrollbar-track:hover {
+  background: #f1f1f1; /* color of the scrollbar track on hover */
+}
+
+/* Track when scrollbar is active (being clicked) */
+::-webkit-scrollbar-track:active {
+  background: #ddd; /* color of the scrollbar track when active */
+}
+
+.shadow {
+	-webkit-animation: shadow-drop-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+	        animation: shadow-drop-center 0.4s cubic-bezier(0.250, 0.460, 0.450, 0.940) both;
+}
+
+ @-webkit-keyframes shadow-drop-center {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
+}
+@keyframes shadow-drop-center {
+  0% {
+    -webkit-box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+            box-shadow: 0 0 0 0 rgba(0, 0, 0, 0);
+  }
+  100% {
+    -webkit-box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+            box-shadow: 0 0 20px 0px rgba(0, 0, 0, 0.35);
+  }
 }

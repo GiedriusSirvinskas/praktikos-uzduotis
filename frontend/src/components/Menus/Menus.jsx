@@ -4,6 +4,7 @@ import MenuStyles from './Menus.module.css';
 import AddIcon from '@mui/icons-material/Add';
 import Foods from './../Foods/Foods';
 import BasicTable from './BasicTable';
+import PositionedSnackbar from '../Cart/Snackbar';
 
 function Menus() {
   const [menus, setMenus] = useState([]);
@@ -51,12 +52,12 @@ function Menus() {
         amount: amount,
         foodPrice: foodPrice,
       });
-      setSubmitMessage('Successfully added a new food');
+      setSubmitMessage('Successfully added item to cart!');
       setTimeout(() => {
         setSubmitMessage('');
       }, 2000);
     } catch (error) {
-      console.log(error);
+      setError(error);
     }
   };
 
@@ -65,13 +66,14 @@ function Menus() {
     .map((food) => {
       const updatedFood = { ...food };
       updatedFood.selectedAmount = updatedFood.selectedAmount || 1;
-      updatedFood.selectedPrice = updatedFood.price * updatedFood.selectedAmount;
+      updatedFood.selectedPrice =
+        updatedFood.price * updatedFood.selectedAmount;
       return updatedFood;
     });
 
   return (
     <>
-      <div className={MenuStyles.container}>
+      <div className={`${MenuStyles.container} ${MenuStyles.shadow}`}>
         {menus.map((menu) => {
           const isActive = activeMenu && activeMenu === menu.menuName;
           const menuClass = isActive
@@ -88,9 +90,30 @@ function Menus() {
           );
         })}
       </div>
-      <div className={MenuStyles.table}>
-        <BasicTable foods={filteredFoods} handleAddToCart={handleAddToCart} handleAmountChange={handleAmountChange}/>
-      </div>
+      {!activeMenu ? (
+        <div className={MenuStyles.prompt}>
+          <p>Please select a menu!</p>
+        </div>
+      ) : (
+        <div className={MenuStyles.table}>
+          <BasicTable
+            foods={filteredFoods}
+            handleAddToCart={handleAddToCart}
+            handleAmountChange={handleAmountChange}
+          />
+          {(error || submitMessage) && (
+            <PositionedSnackbar
+              open={!!error || !!submitMessage}
+              message={error || submitMessage}
+              onClose={() => {
+                setError('');
+                setSubmitMessage('');
+              }}
+              isError={!!error}
+            />
+          )}
+        </div>
+      )}
     </>
   );
 }

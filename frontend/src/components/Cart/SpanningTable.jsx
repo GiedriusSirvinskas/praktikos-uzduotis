@@ -7,6 +7,7 @@ import TableHead from '@mui/material/TableHead';
 import TableRow from '@mui/material/TableRow';
 import Paper from '@mui/material/Paper';
 import RemoveIcon from '@mui/icons-material/Remove';
+import CartStyles from './Cart.module.css'
 
 const TAX_RATE = 0.21;
 
@@ -62,7 +63,7 @@ export default function SpanningTable({ cart, handleDelete }) {
               <TableCell align="right">{ccyFormat(row.basePrice)}</TableCell>
               <TableCell align="right">{ccyFormat(row.totalPrice)}</TableCell>
               <TableCell align="right">
-                <RemoveIcon onClick={() => handleDelete(row.id)} />
+                <RemoveIcon onClick={() => handleDelete(row.id)} className={CartStyles.remove}/>
               </TableCell>
             </TableRow>
           ))}

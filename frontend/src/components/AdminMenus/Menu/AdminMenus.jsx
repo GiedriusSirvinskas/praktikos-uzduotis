@@ -6,6 +6,7 @@ import FormControl from '@mui/material/FormControl';
 import Select from '@mui/material/Select';
 import AdminStyles from './AdminMenus.module.css';
 import { Link } from 'react-router-dom';
+import CustomPaginationActionsTable from './Table';
 
 function AdminMenus() {
   const [menus, setMenus] = useState([]);
@@ -36,29 +37,12 @@ function AdminMenus() {
 
   return (
     <div className={AdminStyles.container}>
-      <div>Manage Menus</div>
-      <div className={AdminStyles.select}>
-        <FormControl sx={{ m: 1, minWidth: 150 }}>
-          <InputLabel id='demo-simple-select-autowidth-label'>Name</InputLabel>
-          <Select
-            labelId='demo-simple-select-autowidth-label'
-            id='demo-simple-select-autowidth'
-            onChange={handleChange}
-            autoWidth
-            label='Name'
-            value={selectedMenu}
-          >
-            <MenuItem value=''>
-              <em>None</em>
-            </MenuItem>
-            {menusJSX}
-          </Select>
-        </FormControl>
-      </div>
+      <div className={AdminStyles.title}>Manage Menus</div>
+      <CustomPaginationActionsTable 
+      data={menus}
+      />
       <div className={AdminStyles.links}>
         <Link to='add'>Add</Link>
-        <Link to={`edit/${selectedMenu}`}>Edit</Link>
-        <Link to={`delete/${selectedMenu}`}>Delete</Link>
       </div>
     </div>
   );

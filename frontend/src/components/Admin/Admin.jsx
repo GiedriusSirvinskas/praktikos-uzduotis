@@ -15,7 +15,7 @@ import DeleteFood from '../AdminMenus/Foods/DeleteFood';
 function Admin() {
   return (
     <div className={AdminStyles.container}>
-      <div className={AdminStyles.navigation}>
+      <div className={`${AdminStyles.navigation} ${AdminStyles.shadow}`}>
         <IconBreadcrumbs />
       </div>
       <Routes>

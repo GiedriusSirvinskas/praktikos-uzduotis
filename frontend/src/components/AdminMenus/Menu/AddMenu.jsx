@@ -4,6 +4,7 @@ import Button from '@mui/material/Button';
 import AdminStyles from './AdminMenus.module.css';
 import { useState } from 'react';
 import { useNavigate } from 'react-router-dom';
+import PositionedSnackbar from '../../Cart/Snackbar';
 
 function AddMenu() {
   const postMenuURL = 'http://localhost:3000/menus';
@@ -22,7 +23,7 @@ function AddMenu() {
       setSubmitMessage('Successfully added a new menu');
       setTimeout(() => {
         setSubmitMessage('');
-        navigate('/admin/menus')
+        navigate('/admin/menus');
       }, 2000);
     } catch (error) {
       setError(error.response.data.error);
@@ -33,7 +34,7 @@ function AddMenu() {
   };
   return (
     <div className={AdminStyles.addMenu}>
-      <div>Add new menu</div>
+      <div className={AdminStyles.title}>Add new menu</div>
       <form>
         <TextField
           id='outlined-basic'
@@ -45,10 +46,17 @@ function AddMenu() {
           Submit
         </Button>
       </form>
-      <div className={AdminStyles.messageContainer}>
-        {submitMessage && <div>{submitMessage}</div>}
-        {error && <div>{error}</div>}
-      </div>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }

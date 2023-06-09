@@ -8,6 +8,10 @@ orderRouter
 .get(orderController.getOrders)
 
 orderRouter
+.route('/:id')
+.delete(orderController.deleteOrder)
+
+orderRouter
 .route('/:id/approve')
 .patch(orderController.approveOrder)
 

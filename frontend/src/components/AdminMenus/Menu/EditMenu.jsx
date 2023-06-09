@@ -4,6 +4,7 @@ import TextField from '@mui/material/TextField';
 import Button from '@mui/material/Button';
 import { useState } from 'react';
 import { useParams, useNavigate } from 'react-router-dom';
+import PositionedSnackbar from '../../Cart/Snackbar';
 
 function EditMenu() {
   const navigate = useNavigate();
@@ -25,7 +26,7 @@ function EditMenu() {
       setSubmitMessage('Successfully edited a menu');
       setTimeout(() => {
         setSubmitMessage('');
-        navigate('/admin/menus')
+        navigate('/admin/menus');
       }, 2000);
     } catch (error) {
       setError(error.response.data.error);
@@ -49,10 +50,17 @@ function EditMenu() {
           Submit
         </Button>
       </form>
-      <div className={AdminStyles.messageContainer}>
-        {submitMessage && <div>{submitMessage}</div>}
-        {error && <div>{error}</div>}
-      </div>
+      {(error || submitMessage) && (
+        <PositionedSnackbar
+          open={!!error || !!submitMessage}
+          message={error || submitMessage}
+          onClose={() => {
+            setError('');
+            setSubmitMessage('');
+          }}
+          isError={!!error}
+        />
+      )}
     </div>
   );
 }
