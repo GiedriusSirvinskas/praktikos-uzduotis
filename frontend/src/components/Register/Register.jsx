@@ -35,12 +35,12 @@ function Register() {
   });
 
   return (
-    <div>
-      <h3>Registracija</h3>
+    <div className={RegisterStyles.container}>
+      <h3 className={RegisterStyles.title}>Register</h3>
       <form onSubmit={formik.handleSubmit} className='loginForm'>
         <input
           type='text'
-          placeholder='Vardas'
+          placeholder='Name'
           name='name'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -48,7 +48,7 @@ function Register() {
         />
         <input
           type='email'
-          placeholder='El. paštas'
+          placeholder='Email'
           name='email'
           onChange={formik.handleChange}
           onBlur={formik.handleBlur}
@@ -57,7 +57,7 @@ function Register() {
         <span className={RegisterStyles.passwordInput}>
           <input
             type={showPassword ? 'text' : 'password'}
-            placeholder='Slaptažodis'
+            placeholder='Password'
             name='password'
             onChange={formik.handleChange}
             onBlur={formik.handleBlur}
@@ -70,8 +70,8 @@ function Register() {
             {showPassword ? <RiEyeOffFill /> : <RiEyeFill />}
           </span>
         </span>
-        <button type='submit'>Užsiregistruoti</button>
-        <Link to='/'>Atgal</Link>
+        <button type='submit'>Register</button>
+        <Link to='/login'>Go Back</Link>
       </form>
       <div>{error}</div>
     </div>

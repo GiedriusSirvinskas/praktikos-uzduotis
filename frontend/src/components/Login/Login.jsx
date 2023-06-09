@@ -5,6 +5,7 @@ import { useState } from 'react';
 import { Link } from 'react-router-dom';
 import { AuthContext } from './../../context/AuthContext';
 import { useContext } from 'react';
+import LoginStyles from './Login.module.css'
 
 function Login() {
   const loginURL = 'http://localhost:3000/users/login';
@@ -28,9 +29,9 @@ function Login() {
   });
 
   return (
-    <div className='loginPage'>
-      <h3>Login</h3>
-      <form onSubmit={formik.handleSubmit} className='loginForm'>
+    <div className={LoginStyles.container}>
+      <h3 className={LoginStyles.title}>Login</h3>
+      <form onSubmit={formik.handleSubmit}>
         <input
           type='email'
           placeholder='Email'
@@ -47,13 +48,13 @@ function Login() {
           onBlur={formik.handleBlur}
           value={formik.values.password}
         />
-        <button type='submit' className='gradient-class'>
+        <button type='submit'>
           Login
         </button>
       </form>
       <p>
         Don't have an account?{' '}
-        <Link to='/signup' className='signupLink'>
+        <Link to='/signup'>
           Register
         </Link>
       </p>

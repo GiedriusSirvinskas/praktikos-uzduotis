@@ -45,7 +45,7 @@ export default function BasicTable({
                 {food.foodName}
               </TableCell>
               <TableCell align={isMobile ? 'left' : 'right'}>{food.description}</TableCell>
-              <TableCell align={isMobile ? 'left' : 'right'}>{food.selectedPrice}</TableCell>
+              <TableCell align={isMobile ? 'left' : 'right'}>{food.selectedPrice.toFixed(2)}</TableCell>
               <TableCell align={isMobile ? 'left' : 'right'}>
                 <TextField
                   type='number'

@@ -68,7 +68,7 @@ export default function OutlinedCard({
           <div>
             <div>Price</div>
             {foodPrices.map((food, index) => {
-              return <div key={index}>{food}</div>;
+              return <div key={index}>{food.toFixed(2)}</div>;
             })}
           </div>
         </div>

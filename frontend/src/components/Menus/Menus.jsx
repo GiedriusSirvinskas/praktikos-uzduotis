@@ -1,10 +1,11 @@
 import axios from 'axios';
-import { useEffect, useState } from 'react';
+import { useContext, useEffect, useState } from 'react';
 import MenuStyles from './Menus.module.css';
 import AddIcon from '@mui/icons-material/Add';
 import Foods from './../Foods/Foods';
 import BasicTable from './BasicTable';
 import PositionedSnackbar from '../Cart/Snackbar';
+import { AuthContext } from '../../context/AuthContext';
 
 function Menus() {
   const [menus, setMenus] = useState([]);
@@ -13,6 +14,8 @@ function Menus() {
   const [amount, setAmount] = useState(1);
   const [submitMessage, setSubmitMessage] = useState('');
   const [activeMenu, setActiveMenu] = useState('');
+
+  const { loggedIn } = useContext(AuthContext);
 
   const foodsURL = 'http://localhost:3000/foods';
   const menusURL = 'http://localhost:3000/menus';
@@ -66,52 +69,59 @@ function Menus() {
     .map((food) => {
       const updatedFood = { ...food };
       updatedFood.selectedAmount = updatedFood.selectedAmount || 1;
-      updatedFood.selectedPrice =
-        updatedFood.price * updatedFood.selectedAmount;
+      updatedFood.selectedPrice = updatedFood.price * updatedFood.selectedAmount;
       return updatedFood;
     });
 
   return (
     <>
-      <div className={`${MenuStyles.container} ${MenuStyles.shadow}`}>
-        {menus.map((menu) => {
-          const isActive = activeMenu && activeMenu === menu.menuName;
-          const menuClass = isActive
-            ? `${MenuStyles.menu} ${MenuStyles.active}`
-            : MenuStyles.menu;
-          return (
-            <div
-              key={menu.menuName}
-              onClick={() => setActiveMenu(menu.menuName)}
-              className={menuClass}
-            >
-              {menu.menuName}
+      {loggedIn ? (
+        <>
+          <div className={`${MenuStyles.container} ${MenuStyles.shadow}`}>
+            {menus.map((menu) => {
+              const isActive = activeMenu && activeMenu === menu.menuName;
+              const menuClass = isActive
+                ? `${MenuStyles.menu} ${MenuStyles.active}`
+                : MenuStyles.menu;
+              return (
+                <div
+                  key={menu.menuName}
+                  onClick={() => setActiveMenu(menu.menuName)}
+                  className={menuClass}
+                >
+                  {menu.menuName}
+                </div>
+              );
+            })}
+          </div>
+          {!activeMenu ? (
+            <div className={MenuStyles.prompt}>
+              <p>Please select a menu!</p>
             </div>
-          );
-        })}
-      </div>
-      {!activeMenu ? (
-        <div className={MenuStyles.prompt}>
-          <p>Please select a menu!</p>
-        </div>
-      ) : (
-        <div className={MenuStyles.table}>
-          <BasicTable
-            foods={filteredFoods}
-            handleAddToCart={handleAddToCart}
-            handleAmountChange={handleAmountChange}
-          />
-          {(error || submitMessage) && (
-            <PositionedSnackbar
-              open={!!error || !!submitMessage}
-              message={error || submitMessage}
-              onClose={() => {
-                setError('');
-                setSubmitMessage('');
-              }}
-              isError={!!error}
-            />
+          ) : (
+            <div className={MenuStyles.table}>
+              <BasicTable
+                foods={filteredFoods}
+                handleAddToCart={handleAddToCart}
+                handleAmountChange={handleAmountChange}
+              />
+              {(error || submitMessage) && (
+                <PositionedSnackbar
+                  open={!!error || !!submitMessage}
+                  message={error || submitMessage}
+                  onClose={() => {
+                    setError('');
+                    setSubmitMessage('');
+                  }}
+                  isError={!!error}
+                />
+              )}
+            </div>
           )}
+        </>
+      ) : (
+        <div>
+          <p>Please log in!</p>
         </div>
       )}
     </>
