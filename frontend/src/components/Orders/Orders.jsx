@@ -12,6 +12,7 @@ function Orders() {
   const [submitMessage, setSubmitMessage] = useState('');
   const [currentPage, setCurrentPage] = useState(1);
   const [totalPages, setTotalPages] = useState(1);
+  const [limit, setLimit] = useState(getInitialLimit());
   const ordersURL = 'http://localhost:3000/orders/';
   const { id } = useParams();
 
@@ -19,7 +20,7 @@ function Orders() {
     const fetchOrders = async () => {
       try {
         const response = await axios.get(
-          `${ordersURL}?page=${currentPage}&limit=8`
+          `${ordersURL}?page=${currentPage}&limit=${limit}`
         );
         setOrders(response.data.orders);
         setTotalPages(response.data.totalPages);
@@ -32,7 +33,23 @@ function Orders() {
     };
 
     fetchOrders();
-  }, [currentPage, orders]);
+  }, [currentPage, submitMessage, limit]);
+
+  useEffect(() => {
+    const handleWindowResize = () => {
+      setLimit(getInitialLimit()); // Update limit based on window size
+    };
+
+    window.addEventListener('resize', handleWindowResize);
+
+    return () => {
+      window.removeEventListener('resize', handleWindowResize);
+    };
+  }, []);
+
+  function getInitialLimit() {
+    return window.innerWidth <= 768 ? 1 : 8;
+  }
 
   const handleApprove = (id) => {
     try {

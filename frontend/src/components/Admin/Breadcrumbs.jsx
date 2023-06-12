@@ -4,21 +4,30 @@ import { Link } from 'react-router-dom';
 import MenuBookIcon from '@mui/icons-material/MenuBook';
 import RamenDiningIcon from '@mui/icons-material/RamenDining';
 import BookmarkBorderIcon from '@mui/icons-material/BookmarkBorder';
+import AdminStyles from './Admin.module.css';
 
 export default function IconBreadcrumbs() {
   return (
     <div>
-      <Breadcrumbs aria-label='breadcrumb' sx={{fontSize: '2rem'}}>
+      <Breadcrumbs
+        aria-label='breadcrumb'
+        sx={{
+          fontSize: '2rem',
+          '@media (max-width: 768px)': {
+            fontSize: '1rem',
+          },
+        }}
+      >
         <Link to='menus'>
-          <MenuBookIcon fontSize='2rem'/>
+          <MenuBookIcon fontSize='2rem' />
           Menus
         </Link>
         <Link to='foods'>
-          <RamenDiningIcon fontSize='2rem'/>
+          <RamenDiningIcon fontSize='2rem' />
           Foods
         </Link>
         <Link to='orders'>
-          <BookmarkBorderIcon fontSize='2rem'/>
+          <BookmarkBorderIcon fontSize='2rem' />
           Orders
         </Link>
       </Breadcrumbs>

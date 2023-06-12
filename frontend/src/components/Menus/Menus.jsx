@@ -120,7 +120,7 @@ function Menus() {
           )}
         </>
       ) : (
-        <div>
+        <div className={MenuStyles.prompt}>
           <p>Please log in!</p>
         </div>
       )}

@@ -44,6 +44,12 @@
   cursor: pointer;
 }
 
+@media screen and (max-width: 768px) {
+  .menu {
+    font-size: 1rem;
+  }
+}
+
 .menu:hover {
   color: rgb(0, 135, 219);
 }

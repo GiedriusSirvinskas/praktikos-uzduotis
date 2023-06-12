@@ -19,3 +19,8 @@
 .remove {
   cursor: pointer;
 }
+
+.message {
+  font-size: 4rem;
+  color: #0080c0;
+}

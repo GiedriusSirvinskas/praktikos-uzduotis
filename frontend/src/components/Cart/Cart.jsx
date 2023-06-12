@@ -76,20 +76,26 @@ function Cart() {
 
   return (
     <div className={CartStyles.container}>
-      <SpanningTable cart={cart} handleDelete={handleDelete} />
-      <Button variant='outlined' onClick={handleOrder}>
-        Order
-      </Button>
-      {(error || submitMessage) && (
-        <PositionedSnackbar
-          open={!!error || !!submitMessage}
-          message={error || submitMessage}
-          onClose={() => {
-            setError('');
-            setSubmitMessage('');
-          }}
-          isError={!!error}
-        />
+      {cart.length > 0 ? (
+        <>
+          <SpanningTable cart={cart} handleDelete={handleDelete} />
+          <Button variant='outlined' onClick={handleOrder}>
+            Order
+          </Button>
+          {(error || submitMessage) && (
+            <PositionedSnackbar
+              open={!!error || !!submitMessage}
+              message={error || submitMessage}
+              onClose={() => {
+                setError('');
+                setSubmitMessage('');
+              }}
+              isError={!!error}
+            />
+          )}
+        </>
+      ) : (
+        <p className={CartStyles.message}>Cart is empty</p>
       )}
     </div>
   );
