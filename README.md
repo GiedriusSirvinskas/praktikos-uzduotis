@@ -2,3 +2,8 @@
 2nd step: npm install  
 3rd step: npm run start:both  
 4th step: open this link: http://localhost:5173
+  
+    
+Admin login:  
+admin@admin.lt  
+admin123
